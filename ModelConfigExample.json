@@ -1,0 +1,8 @@
+{
+  "apiKey": "YOUR_OPENAI_API_KEY",
+  "model": "gpt-5.1",
+  "maxRetries": 3,
+  "reasoning": {
+    "effort": "medium"
+  }
+}
