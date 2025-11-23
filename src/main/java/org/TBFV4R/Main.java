@@ -86,6 +86,7 @@ public class Main {
             String currentD = fsfTwoPart.get(line)[1];
             for (String string : testCase.split(",")) {
                 String LHS = string.split("=")[0];
+                System.out.println(LHS);
                 String RHS = string.split("=")[1];
                 testCaseMap.put(LHS, RHS);
             }
