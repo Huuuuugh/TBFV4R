@@ -163,7 +163,6 @@ public class Runner {
 
     public static TBFVResult validateWithTestCase(String ssmp, String currentT, String currentD, HashMap<String, String> testCaseMap) throws Exception {
         String runnableProgram;
-
         boolean hasMain = new JavaParser().parse(ssmp).getResult()
                 .get()
                 .findAll(MethodDeclaration.class)

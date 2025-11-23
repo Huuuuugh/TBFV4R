@@ -46,7 +46,7 @@ public class Main {
 
             int line = Integer.parseInt(s.nextLine());
             line -= 1;
-            String condition = ifsfTwoPart.get(line)[0];
+            String condition = fsfTwoPart.get(line)[0];
             String testCase = model.generateTestCase(condition);
             System.out.println("Proposed test case: " + testCase);
             boolean passTest = false;
@@ -84,9 +84,11 @@ public class Main {
 
             String currentT = fsfTwoPart.get(line)[0];
             String currentD = fsfTwoPart.get(line)[1];
-            String LHS = testCase.split("=")[0];
-            String RHS = testCase.split("=")[1];
-            testCaseMap.put(LHS, RHS);
+            for (String string : testCase.split(",")) {
+                String LHS = string.split("=")[0];
+                String RHS = string.split("=")[1];
+                testCaseMap.put(LHS, RHS);
+            }
             //currentD=currentD.replace(LHS,RHS);
             try {
                 TBFVResult tbfvResult = Runner.validateWithTestCase(ssmp, currentT, currentD, testCaseMap);

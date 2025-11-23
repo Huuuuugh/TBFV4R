@@ -372,7 +372,7 @@ public class TransFileOperator {
             }
         }
         System.out.println("SSMP!");
-        return null;
+        return pureProgram;
     }
 
 }
