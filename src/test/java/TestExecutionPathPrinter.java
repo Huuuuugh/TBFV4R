@@ -1,11 +1,10 @@
-import org.TBFV4R.trans.ExecutionPathPrinter;
-import org.TBFV4R.trans.TransWorker;
+import org.TBFV4R.path.TransWorker;
 import org.TBFV4R.utils.FileUtil;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.TBFV4R.trans.ExecutionPathPrinter.addPrintStmt;
+import static org.TBFV4R.path.ExecutionPathPrinter.addPrintStmt;
 
 public class TestExecutionPathPrinter {
     @Test

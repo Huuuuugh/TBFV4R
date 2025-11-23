@@ -19,6 +19,7 @@ public class Model {
     private final ModelConfig config;
     private final String promptCode2IFSF;
     private final String promptIFSF2FSF;
+    private final String promptGenerateTestCase;
     ObjectMapper mapper = new ObjectMapper();
     public Model(){
         mapper = new ObjectMapper();
@@ -37,6 +38,11 @@ public class Model {
             this.promptIFSF2FSF= FileUtil.readLinesAsString("resources/prompts/IFSF2FSF.txt","\n");
         } catch (IOException e) {
             throw new Error("resources/prompts/IFSF2FSF.txt not found!");
+        }
+        try {
+            this.promptGenerateTestCase= FileUtil.readLinesAsString("resources/prompts/GenerateTestCase.txt","\n");
+        } catch (IOException e) {
+            throw new Error("resources/prompts/GenerateTestCase.txt not found!");
         }
     }
     public String predict(String input){
@@ -113,6 +119,10 @@ public class Model {
 
     public String IFSF2FSF(String IFSF) {
         String text = (this.predict(promptIFSF2FSF+"\n"+IFSF));
+        return text;
+    }
+    public String generateTestCase(String condition) {
+        String text = (this.predict(promptGenerateTestCase+"\n"+condition));
         return text;
     }
 

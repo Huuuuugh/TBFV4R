@@ -1,8 +1,8 @@
-package org.TBFV4R.trans;
+package org.TBFV4R.path;
 
 import java.io.IOException;
 
-import static org.TBFV4R.trans.TransFileOperator.ONE_STATIC_MD_CODES_DIR;
+import static org.TBFV4R.path.TransFileOperator.ONE_STATIC_MD_CODES_DIR;
 
 public class TransWorker {
     public static void prepareSourceCodes(String sourceCodesPath) throws IOException {

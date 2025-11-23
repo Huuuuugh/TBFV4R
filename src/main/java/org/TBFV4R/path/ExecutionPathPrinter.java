@@ -1,4 +1,4 @@
-package org.TBFV4R.trans;
+package org.TBFV4R.path;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.StaticJavaParser;
@@ -14,7 +14,6 @@ import com.github.javaparser.ast.stmt.*;
 import com.github.javaparser.ast.visitor.ModifierVisitor;
 import com.github.javaparser.ast.visitor.Visitable;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
-import org.TBFV4R.utils.FileUtil;
 
 import java.util.*;
 
