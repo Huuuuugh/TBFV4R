@@ -7,13 +7,16 @@ import org.TBFV4R.verification.SpecUnit;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 public class Z3Solver {
     public static TBFVResult callZ3Solver(SpecUnit su) throws IOException {
         TBFVResult res =null;
         String suJson = su.toJson();
+        String encoded = Base64.getEncoder().encodeToString(suJson.getBytes(StandardCharsets.UTF_8));
 //        ProcessBuilder pb = new ProcessBuilder("python3", "resources/dynamic_testing.py", "--specunit",suJson);
-        ProcessBuilder pb = new ProcessBuilder("python3", "resources/z3_validation_runner.py", "--su",suJson);
+        ProcessBuilder pb = new ProcessBuilder("python3", "resources/z3_validation_runner.py", "--su",encoded);
         Process process = pb.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         StringBuilder errorInfo = new StringBuilder();

@@ -1,15 +1,18 @@
 package org.TBFV4R;
 
+import org.TBFV4R.TBFV.Runner;
+import org.TBFV4R.TBFV.TBFVResult;
+import org.TBFV4R.TBFV.Z3Solver;
 import org.TBFV4R.llm.Model;
-import org.TBFV4R.utils.EvalUtil;
-import org.TBFV4R.utils.FSFSplit;
-import org.TBFV4R.utils.FileUtil;
-import org.TBFV4R.utils.InputUtil;
+import org.TBFV4R.tcg.ExecutionEnabler;
+import org.TBFV4R.utils.*;
+import org.TBFV4R.verification.SpecUnit;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
+
+import static org.TBFV4R.path.ExecutionPathPrinter.addPrintStmt;
+import static org.TBFV4R.path.TransWorker.trans2SSMP;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -29,20 +32,21 @@ public class Main {
         System.out.println(FSF);
         System.out.println();
 
-        List<String[]> fsfTwoPart = FSFSplit.parseFSFString(IFSF);
+        List<String[]> ifsfTwoPart = FSFSplit.parseIFSFString(IFSF);
+        List<String[]> fsfTwoPart = FSFSplit.parseFSFString(FSF);
         System.out.println("Select a test condition:");
-        for (int i = 0; i < fsfTwoPart.size(); i++) {
-            System.out.println("\t"+(i+1)+")"+fsfTwoPart.get(i)[0]+"\t(T"+(i+1)+")");
+        for (int i = 0; i < ifsfTwoPart.size(); i++) {
+            System.out.println("\t"+(i+1)+")"+ifsfTwoPart.get(i)[0]+"\t(T"+(i+1)+")");
         }
         System.out.print("Enter index:");
         Scanner s = new Scanner(System.in);
         int line = s.nextInt();
         line-=1;
-        String condition = fsfTwoPart.get(line)[0];
+        String condition = ifsfTwoPart.get(line)[0];
         String testCase = model.generateTestCase(condition);
         System.out.println("Proposed test case: "+testCase);
         boolean passTest = false;
-        if(EvalUtil.evalBoolean("var "+testCase,condition)){
+        if(EvalUtil.evalBoolean("var "+testCase+";",condition)){
             System.out.println("Test Case:"+testCase+" satisfied condition " + condition);
             System.out.println("Press Enter or type one of {accept/ok/yes/y/confirm/是/好/确认} to accept.");
             System.out.println("Or input ONE integer to replace:");
@@ -57,7 +61,7 @@ public class Main {
                 int newValue = input.get();
                 passTest=false;
                 String newTestCase = EvalUtil.replaceNumber(testCase,newValue);
-                if(EvalUtil.evalBoolean("var "+newTestCase,condition)){
+                if(EvalUtil.evalBoolean("var "+newTestCase+";",condition)){
                     passTest=true;
                     testCase = newTestCase;
                     System.out.println("The new test case is " + testCase);
@@ -69,7 +73,20 @@ public class Main {
         }while(!passTest);
 
         System.out.println("[Run] Simulate test case");
-
+        //code = addPrintStmt(code);
+        String ssmp = trans2SSMP(code);
+        HashMap<String,String> testCaseMap = new HashMap<>();
+        String currentT = fsfTwoPart.get(line)[0];
+        String currentD = fsfTwoPart.get(line)[1];
+        String LHS = testCase.split("=")[0];
+        String RHS = testCase.split("=")[1];
+        currentD=currentD.replace(LHS,RHS);
+        try {
+            TBFVResult tbfvResult = Runner.validateWithTestCase(ssmp,currentT,currentD,testCaseMap);
+            System.out.println(TBFVResultDecoder.parse(tbfvResult));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }

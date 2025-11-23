@@ -25,7 +25,7 @@ public class FSFSplit {
         }
         return parts;
     }
-    public static List<String[]> parseFSFString(String input) {
+    public static List<String[]> parseIFSFString(String input) {
         List<String[]> result = new ArrayList<>();
         String noNewlines = removeNewlines(input);
         List<String> rules = splitByDoublePipe(noNewlines);
@@ -34,4 +34,29 @@ public class FSFSplit {
         }
         return result;
     }
+    public static List<String[]> parseFSFString(String input) {
+        List<String[]> result = new ArrayList<>();
+        String[] blocks = input.split("\\n\\s*\\n");
+
+        for (String block : blocks) {
+            String[] lines = block.strip().split("\\n");
+            String t = null, d = null;
+
+            for (String line : lines) {
+                line = line.trim();
+                if (line.startsWith("T")) {
+                    t = line.substring(line.indexOf(":") + 1).trim();
+                } else if (line.startsWith("D")) {
+                    d = line.substring(line.indexOf(":") + 1).trim();
+                }
+            }
+
+            if (t != null && d != null) {
+                result.add(new String[]{t, d});
+            }
+        }
+
+        return result;
+    }
+
 }
