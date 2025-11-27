@@ -44,7 +44,6 @@ def run_java_code(java_code: str, timeout_seconds=20):
     print(file_path)
     with open(file_path, "w") as file:
         file.write(java_code)
-        print("写入成功")
     try:
         subprocess.run(["javac", file_path], check=True)
     except subprocess.CalledProcessError:
@@ -205,7 +204,7 @@ def solver_check_z3(z3_expr:str, vars_types:dict = "")->str:
 
     except Exception as e:
         print("solver check fail!")
-        print("错误信息:", e)
+        print("Error Message:", e)
         raise
         # return "ERROR"
 
@@ -250,7 +249,7 @@ def java_expr_to_z3(expr_str, var_types: dict):
     expr_str = expr_str.strip()
     expr_str = expr_str.lstrip()  # 进一步去除前导空白
     expr_str = " ".join(expr_str.splitlines())  # 合并为单行，去除多余缩进
-    print(f"Java表达式: {repr(expr_str)}")  # 用repr��便调试不可见字符
+    print(f"Java Expression: {repr(expr_str)}")  # 用repr��便调试不可见字符
     expr_str = remove_type_transfer_stmt_in_expr(expr_str)
     # expr_str = convert_ternary(expr_str)  # 新增三目运算符转换
     # 构建 Z3 变量
@@ -400,7 +399,7 @@ def java_expr_to_z3(expr_str, var_types: dict):
                     # raise TypeError("按位异或运算的操作数必须是位向量")
                 return left ^ right
             else:
-                raise ValueError(f"不支持的算术操作: {type(op)}")
+                raise ValueError(f"Unsupported Operator: {type(op)}")
     try:
         parsed = ast.parse(expr_str, mode="eval")
     except Exception as e:
@@ -410,7 +409,7 @@ def java_expr_to_z3(expr_str, var_types: dict):
     try:
         z3_expr = Z3Transformer().visit(parsed.body)
     except Exception as e:
-        print(f"Z3Transformer 处理异常: {e}")
+        print(f"Z3Transformer Exception: {e}")
         z3_expr = f"ERROR Info: {e}"  # 或者根据需要设置默认值
         raise
     return z3_expr
@@ -527,16 +526,16 @@ def deal_with_spec_unit_json(spec_unit_json: str):
     #     result = Result(1,z3_expr,"")
     #     print("result:" + result.to_json())
     #     return
-    print("T && Ct && !D 转Z3表达式: " + str(z3_expr))
+    print("Z3 expression of T && Ct && !D: " + str(z3_expr))
     solver_result = solver_check_z3(z3_expr,var_types)
     if solver_result == "OK":
         #组装 combined_expr
         previous_cts.append(current_ct)
         combined_expr = combind_expr_and_list(f"({T})", previous_cts)
-        print("完成一轮路径验证后，当前(T) && !(previous_cts) && !(current_ct): " + combined_expr)
+        print("Post path verification: T && !previous_cts && !current_ct:" + combined_expr)
         combined_expr = add_value_constraints(combined_expr, var_types)
         z3_expr = java_expr_to_z3(combined_expr, var_types)
-        print("(T) && !(previous_cts) && !(current_ct) 转 Z3表达式: " + str(z3_expr))
+        print("Z3 expression of (T) && !(previous_cts) && !(current_ct): " + str(z3_expr))
         scr = solver_check_z3(z3_expr,var_types)
         if scr == "OK":
             result = Result(3,"",current_ct)
@@ -692,9 +691,9 @@ def fsf_validate(fu_json: str):
         return
     r = solver_check_z3(z3_expr,fu.vars)
     if r == "OK": #unsat，具有完备性
-        print("T具有完备性")
+        print("T possesses completeness")
     else: #不具有完备性
-        result = Result(3, or_connect_ts, "不具有完备性")
+        result = Result(3, or_connect_ts, " lacks completeness")
         print("FSF validation result:" + result.to_json())
         return
 
@@ -754,16 +753,16 @@ def main():
     #创建解析器
     parser = argparse.ArgumentParser()
     # 添加参数定义
-    parser.add_argument('-s', '--su', '--specUnit', help='输入要验证的SpecUnit对象的JSON字符串', required=False)
-    parser.add_argument('-f', '--fu', '--fsfValidationUnit', help='输入要验证的fsfValidationUnit对象的JSON字符串', required=False)
-    parser.add_argument('-g', '--gu', '--generationUnit', help='输入带有约束条件和程序的generationUnit', required=False)
+    parser.add_argument('-s', '--su', '--specUnit', help='Enter the JSON string of the SpecUnit object to be validated.', required=False)
+    parser.add_argument('-f', '--fu', '--fsfValidationUnit', help='Enter the JSON string of the fsfValidationUnit object to be validated.', required=False)
+    parser.add_argument('-g', '--gu', '--generationUnit', help='Enter the generationUnit containing the constraints and the program.', required=False)
     # 解析命令行参数
     args = parser.parse_args()
     spec_unit_json = args.su
     fsf_validation_unit_json = args.fu
     generation_unit = args.gu
     if spec_unit_json is None and fsf_validation_unit_json is None and generation_unit is None:
-        print("请提供输入要验证的JSON字符串")
+        print("Please provide the JSON string to be validated.")
         return
     if spec_unit_json is not None:
         print("start")
@@ -771,8 +770,8 @@ def main():
         spec_unit_json = re.sub(r'\s+', '', spec_unit_json)  # 去掉所有空白字符
         spec_unit_json = base64.b64decode(spec_unit_json).decode("utf-8")
         print(spec_unit_json)
-        deal_with_spec_unit_json(spec_unit_json)
-        #run_with_timeout(deal_with_spec_unit_json, spec_unit_json, 20, "SpecUnit 验证")
+        #deal_with_spec_unit_json(spec_unit_json)
+        run_with_timeout(deal_with_spec_unit_json, spec_unit_json, 20, "SpecUnit 验证")
 
     if fsf_validation_unit_json is not None:
         run_with_timeout(fsf_validate, fsf_validation_unit_json, 20, "FSF 验证")
