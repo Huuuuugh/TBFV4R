@@ -161,7 +161,7 @@ public class Runner {
         return totallyVerified;
     }
 
-    public static TBFVResult validateWithTestCase(String ssmp, String currentT, String currentD, HashMap<String, String> testCaseMap) throws Exception {
+    public static TBFVResult validateWithTestCase(String ssmp, String currentT, String currentD, Map<String, String> testCaseMap) throws Exception {
         String runnableProgram;
         boolean hasMain = new JavaParser().parse(ssmp).getResult()
                 .get()

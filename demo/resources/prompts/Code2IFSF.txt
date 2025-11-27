@@ -29,7 +29,10 @@ public class UserInputProgram{
     }
 }
 
-The output must strictly following the format of Output example. Do not add any other instructions!
+The output must strictly following the format of Output example. The Condition before symbol && must be xx <operator> number, two parameter should not simultaneously appear in the LHS and RHS.
+For example, speed>speedThreshold is not allowed, you should say speed>20 instead when there is speedThreshold=20 appeared in code.
+
+Do not add any other instructions!
 Output Example:
 x > 0 &&
 n becomes the least non-negative integer such that
@@ -37,6 +40,68 @@ n becomes the least non-negative integer such that
 
 x <= 0 &&
 n becomes 0
+
+Here is another example, this example aiming at tell you that your Informal FSF must cover all the condition in code
+Input Example:
+public class ChangeLaneSimple {
+
+    public int Control_Lane_Change(int current_lane) {
+        int target_lane = 2;
+        double car_speed = 28.0;
+        double safe_distance = 30.0;
+        double distanceAhead = 50.0;
+        double frontCarSpeed = 30.0;
+        double distanceBehind = 45.0;
+        double behindCarSpeed = 25.0;
+
+        int decision = 0;
+        int i = 0;
+        while (i < 1) {
+            if (current_lane == target_lane) {
+                decision = 0;
+            } else {
+                boolean safeAhead = (distanceAhead >= safe_distance) && (frontCarSpeed >= car_speed);
+                boolean safeBehind = (distanceBehind >= safe_distance) && (car_speed >= behindCarSpeed);
+                if (safeAhead && safeBehind) {
+                    decision = 1;
+                }
+            }
+            i++;
+        }
+        return decision;
+    }
+
+}
+
+Output Example:
+Informal FSF:
+current_lane == 2 &&
+target_lane becomes 2 &&
+car_speed becomes 28.0 &&
+safe_distance becomes 30.0 &&
+distanceAhead becomes 50.0 &&
+frontCarSpeed becomes 30.0 &&
+distanceBehind becomes 45.0 &&
+behindCarSpeed becomes 25.0 &&
+decision becomes 0 &&
+i becomes 1 ||
+
+current_lane != 2 &&
+target_lane becomes 2 &&
+car_speed becomes 28.0 &&
+safe_distance becomes 30.0 &&
+distanceAhead becomes 50.0 &&
+frontCarSpeed becomes 30.0 &&
+distanceBehind becomes 45.0 &&
+behindCarSpeed becomes 25.0 &&
+distanceAhead >= 30.0 &&
+frontCarSpeed >= 28.0 &&
+distanceBehind >= 30.0 &&
+behindCarSpeed <= 28.0 &&
+safeAhead becomes true &&
+safeBehind becomes true &&
+decision becomes 1 &&
+i becomes 1
 
 Now, process the following input and output only the Informal FSF, strictly following the rules above:
 
