@@ -1,3 +1,22 @@
+# TBFV4J: An automated testing-based formal verification tool for Java
+This project has been accepted for the ISSTA 2025 tool demonstration track: Ai Liu, Yang Liu, and Shaoying Liu. 2025. TBFV4J: An Automated Testing-Based Formal Verification Tool for Java. In 34th ACM SIGSOFT International Symposium on Software Testing and Analysis (ISSTA Companion ’25), June 25–28, 2025, Trondheim, Norway. ACM, New York, NY, USA, 5 pages. https://doi.org/10.1145/3713081.3731740
+
+# Introduction
+
+## Background
+
+The Test-Based Formal Verification (TBFV) tool presented in this paper integrates Specification-Based Testing and Formal Verification to automate the verification of whether a Java program adheres to its specifications. By employing a grey-box testing approach that leverages path exploration and constraint solving, TBFV eliminates the need for deriving loop invariants. 
+
+Below are some TBFV-related papers also published by our research group:
+
+| Publication                                                  | Published         | Paper Titile                                                 |
+| ------------------------------------------------------------ | ----------------- | ------------------------------------------------------------ |
+| [Turing-100. The Alan Turing Centenary](https://easychair.org/publications/volume/Turing-100) | June 22, 2012     | [Utilizing Hoare Logic to Strengthen Testing for Error Detection in Programs.](https://easychair.org/publications/paper/476) |
+| [IEEE Transactions on Software Engineering](https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=32) | February 01, 2022 | [Automatic Test Case and Test Oracle Generation Based on Functional Scenarios in Formal Specifications for Conformance Testing](https://ieeexplore.ieee.org/document/9108630) |
+| [IEEE Transactions on Software Engineering](https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=32) | January 01,  2023 | [Enhancing the Capability of Testing-Based Formal Verification by Handling Operations in Software Packages](https://ieeexplore.ieee.org/document/9712239) |
+
+## 
+
 1. git clone https://github.com/aabcliu/TBFV4R.git
 2. cd TBFV4R
 3. Rename `ModelConfigExample.json` to `ModelConfig.json`
