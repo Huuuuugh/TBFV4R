@@ -2,7 +2,7 @@
 
 # Introduction
 
-## Background
+## 📝 Background
 old version:
 The Test-Based Formal Verification (TBFV) tool presented in this paper integrates Specification-Based Testing and Formal Verification to automate the verification of whether a Java program adheres to its specifications. By employing a grey-box testing approach that leverages path exploration and constraint solving, TBFV eliminates the need for deriving loop invariants. 
 new version:balabla
@@ -15,13 +15,62 @@ Below are some TBFV-related papers also published by our research group:
 | [IEEE Transactions on Software Engineering](https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=32) | February 01, 2022 | [Automatic Test Case and Test Oracle Generation Based on Functional Scenarios in Formal Specifications for Conformance Testing](https://ieeexplore.ieee.org/document/9108630) |
 | [IEEE Transactions on Software Engineering](https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=32) | January 01,  2023 | [Enhancing the Capability of Testing-Based Formal Verification by Handling Operations in Software Packages](https://ieeexplore.ieee.org/document/9712239) |
 
+---
 
-## 
+## 📦 Installation & Run Guide
 
-1. git clone https://github.com/aabcliu/TBFV4R.git
-2. cd TBFV4R
-3. Rename `ModelConfigExample.json` to `ModelConfig.json`
-4. Replace `YOUR_OPENAI_API_KEY` in `ModelConfig.json` with your OpenAI Api Key
-5. Use Python 3.9 and execute the command `pip install -r requirements.txt`.
-6. Install Java 21, and execute the command `java -jar TBFV4R-web-1.0-SNAPSHOT-web.jar`
-7. open another terminal and run `python app.py`
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/aabcliu/TBFV4R.git
+   cd TBFV4R
+   ```
+
+2. **Configure the model file**
+
+   * Rename the example configuration file:
+
+     ```bash
+     mv ModelConfigExample.json ModelConfig.json
+     ```
+   * Open `ModelConfig.json` and replace
+
+     ```json
+     "YOUR_OPENAI_API_KEY"
+     ```
+
+     with your **OpenAI API Key**.
+
+3. **Install dependencies**
+
+   > ⚠️ Make sure to use **Python 3.9**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Install Java**
+
+   * Install **Java 21** (verify with `java -version`)
+
+5. **Run the backend service**
+
+   ```bash
+   java -jar TBFV4R-web-1.0-SNAPSHOT-web.jar
+   ```
+
+6. **Run the frontend/application service**
+
+   * Open another terminal:
+
+     ```bash
+     python app.py
+     ```
+
+7. **Access the application**
+
+   * Open your browser at `http://127.0.0.1:7860` or the address shown in the terminal
+
+---
+
+
