@@ -22,6 +22,7 @@ Below are some TBFV-related papers also published by our research group:
 | [IEEE 36th International Symposium on Software Reliability Engineering (ISSRE)](https://ieeexplore.ieee.org/document/00029) | November 13,  2025 | [Condition Sequence Coverage Criterion and Automatic Test Case Generation for Testing-Based Formal Verification](https://ieeexplore.ieee.org/document/00029) |
 | [Theoretical Aspects of Software Engineering. TASE 2025](https://link.springer.com/chapter/10.1007/978-3-031-98208-8_2) | July 09, 2025| [Testing-Based Formal Verification with Program Slicing on Functional Soundness and Completeness](https://doi.org/10.1007/978-3-031-98208-8_2) |
 | [Proceedings of the 34th ACM SIGSOFT International Symposium on Software Testing and Analysis (ISSTA Companion '25)](https://doi.org/10.1145/3713081.3731740) | June 11, 2025| [TBFV4J: An Automated Testing-Based Formal Verification Tool for Java](https://doi.org/10.1145/3713081.3731740) |
+| [International Journal of Software Engineering and Knowledge Engineering](https://doi.org/10.1142/S0218194024500132) | November 02, 2025| [NNTBFV: Simplifying and Verifying Neural Networks Using Testing-Based Formal Verification](https://doi.org/10.1142/S0218194024500132) |
 
 
 ---
