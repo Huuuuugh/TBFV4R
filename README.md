@@ -90,3 +90,42 @@ Below are some TBFV-related papers also published by our research group:
 ---
 
 
+## Add TBFV4R to Your Project
+
+Include the following dependency in your project build file:
+
+### Gradle
+
+```xml
+plugins {
+    id("java")
+    id("application")
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+}
+group = "org.TBFV4R"
+version = "1.0-SNAPSHOT"
+repositories {
+    mavenCentral()
+}
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+application {
+    mainClass.set("org.TBFV4R.Main")
+}
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.16.0")
+    implementation("org.json:json:20230227")
+    implementation("com.github.javaparser:javaparser-core:3.25.1")
+    compileOnly("org.projectlombok:lombok:1.18.30")
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
+}
+tasks.test {
+    useJUnitPlatform()
+}
+```
+
+
